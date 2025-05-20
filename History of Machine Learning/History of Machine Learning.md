@@ -35,6 +35,7 @@ Bayes’ Theorem was first introduced posthumously in 1763 in a paper by Thomas 
 Concept:
 Bayes’ Theorem provides a mathematical way to update the probability of a hypothesis (event) based on new evidence. It is expressed as:
 	
+![image](https://github.com/user-attachments/assets/134b886f-7d98-4e01-b6da-7577360a272e)
 			
 - P(A): Prior probability of event A
 
@@ -65,6 +66,8 @@ French mathematician Adrien-Marie Legendre introduced the method of least square
 Concept:
 The Least Squares Method minimizes the sum of the squares of the differences between observed and predicted values:
 
+![image](https://github.com/user-attachments/assets/52e91c32-ec63-4b8f-809d-06f7fb9ed0b6)
+
 This leads to the best-fitting line or model in a regression setting.
 
 Importance:
@@ -87,6 +90,7 @@ Russian mathematician Andrey Markov introduced the concept of Markov chains in 1
 Concept:
 A Markov chain models a sequence of events where the probability of each event depends only on the state attained in the previous event (the Markov property).
 
+![image](https://github.com/user-attachments/assets/eb29a06a-5acf-4430-9b0e-d9ee95de8ea4)
 
 
 Importance:
@@ -112,6 +116,7 @@ Invented by American psychologist Frank Rosenblatt in 1957, the Perceptron was o
 Concept:
 A perceptron is a type of linear classifier that maps input features to an output label using a weighted sum and an activation function (usually a step function):
 
+![image](https://github.com/user-attachments/assets/7275b642-a2cd-4214-9fa1-aaace73d5b72)
 
 
 Where:
