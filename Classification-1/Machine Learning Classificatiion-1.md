@@ -240,4 +240,458 @@ Logistic regression uses optimization algorithms to estimate the best-fit parame
 - **TensorFlow / PyTorch** (for custom gradient-based logistic models)
 
 
+#  Linear Models in Python Machine Learning
+
+Linear models are a foundational concept in machine learning, used for both regression and classification tasks. They are simple, interpretable, and efficient, making them a great starting point for many problems.
+
+---
+
+##  What Is a Linear Model?
+
+A linear model assumes a linear relationship between input variables (`X`) and the output (`y`). The model is represented as:
+
+\[
+y = w_1x_1 + w_2x_2 + \ldots + w_nx_n + b
+\]
+
+- \( x_1, x_2, \ldots, x_n \): Input features  
+- \( w_1, w_2, \ldots, w_n \): Weights (coefficients)  
+- \( b \): Bias (intercept term)
+
+Compact form:
+
+\[
+y = \mathbf{w}^\top \mathbf{x} + b
+\]
+
+---
+
+##  Types of Linear Models
+
+### 1. Linear Regression (for continuous output)
+
+```python
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Example: X and y are your data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+```
+predictions = model.predict(X_test)
+# Ridge Regression (L2 regularization)
+```python
+from sklearn.linear_model import Ridge
+
+model = Ridge(alpha=1.0)
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+```
+# Lasso Regression (L1 regularization)
+```python
+from sklearn.linear_model import Lasso
+
+model = Lasso(alpha=0.1)
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+```
+
+# Logistic Regression (for classification)
+```python
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+```
+
+# Evaluating Linear Models
+# For Regression:
+
+```python
+from sklearn.metrics import mean_squared_error, r2_score
+
+mse = mean_squared_error(y_test, predictions)
+r2 = r2_score(y_test, predictions)
+
+print("MSE:", mse)
+print("R^2 Score:", r2)
+```
+
+
+
+
+# For Classification:
+```python
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+accuracy = accuracy_score(y_test, predictions)
+conf_matrix = confusion_matrix(y_test, predictions)
+
+print("Accuracy:", accuracy)
+print("Confusion Matrix:\n", conf_matrix)
+
+```
+
+# Normalize or Standardize Data
+```python
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+model = make_pipeline(StandardScaler(), LinearRegression())
+model.fit(X_train, y_train)
+
+```
+
+
+# Use Polynomial Features for Non-Linear Relationships
+
+```python
+from sklearn.preprocessing import PolynomialFeatures
+
+poly_model = make_pipeline(
+    PolynomialFeatures(degree=2),
+    LinearRegression()
+)
+poly_model.fit(X_train, y_train)
+```
+
+#  Support Vector Machines (SVM) in Python Machine Learning
+
+Support Vector Machines (SVMs) are powerful supervised learning models used for **classification**, **regression**, and **outlier detection**. They are particularly effective in high-dimensional spaces and when the number of dimensions exceeds the number of samples.
+
+---
+
+##  What Is a Support Vector Machine?
+
+SVM aims to find the **optimal hyperplane** that best separates data into classes. The best hyperplane is the one with the **maximum margin** between the two classes.
+
+For non-linearly separable data, SVM uses the **kernel trick** to map input features into a higher-dimensional space where a linear separator may exist.
+
+---
+
+## SVM Works
+
+### 1. **Linear SVM**:
+- Finds a hyperplane that separates the data with the largest margin.
+- Uses support vectors (data points closest to the hyperplane).
+
+### 2. **Non-Linear SVM**:
+- Uses **kernel functions** to project data into higher dimensions:
+  - Linear
+  - Polynomial
+  - Radial Basis Function (RBF)
+  - Sigmoid
+
+---
+
+##  SVM with Scikit-learn
+
+###  Importing and Basic Setup
+
+```python
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import classification_report, confusion_matrix
+```python
+
+# Load Example Dataset
+
+```python
+# Load a toy dataset (e.g., Iris)
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Only use two classes for binary classification example
+X = X[y != 2]
+y = y[y != 2]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```
+
+# Load Example Dataset
+```python
+# Load a toy dataset (e.g., Iris)
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Only use two classes for binary classification example
+X = X[y != 2]
+y = y[y != 2]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```
+
+# SVM Classification Example
+
+```python
+# Create and train an SVM classifier
+model = SVC(kernel='linear', C=1.0)
+model.fit(X_train, y_train)
+
+# Predict and evaluate
+predictions = model.predict(X_test)
+
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
+```
+
+
+# Common Kernels in SVM
+
+Linear Kernel
+```python 
+model = SVC(kernel='linear')
+```
+
+
+
+Polynomial Kernel
+```python 
+model = SVC(kernel='poly', degree=3)
+```
+RBF Kernel (default and most common)
+```python 
+model = SVC(kernel='rbf', gamma='scale')
+```
+Sigmoid Kernel
+```python 
+model = SVC(kernel='sigmoid')
+```
+
+# Evaluation Metrics
+
+```python
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+print("Accuracy:", accuracy_score(y_test, predictions))
+print("Precision:", precision_score(y_test, predictions))
+print("Recall:", recall_score(y_test, predictions))
+print("F1 Score:", f1_score(y_test, predictions))
+```
+
+# SVM for Regression (SVR)
+
+```python
+from sklearn.svm import SVR
+
+svr_model = SVR(kernel='rbf', C=100, epsilon=0.1)
+svr_model.fit(X_train, y_train)
+y_pred = svr_model.predict(X_test)
+```
+
+# SVM for Outlier Detection
+```python
+from sklearn.svm import OneClassSVM
+
+oc_svm = OneClassSVM(kernel='rbf', gamma=0.1, nu=0.05)
+oc_svm.fit(X_train)
+
+# Predict: -1 for outliers, 1 for inliers
+preds = oc_svm.predict(X_test)
+```
+
+
+#  Stochastic Gradient Descent (SGD) in Python Machine Learning
+
+Stochastic Gradient Descent (SGD) is an optimization algorithm used to **minimize a loss function** by updating model parameters using a small batch (or a single sample) at a time. It is widely used for training linear models and neural networks due to its speed and efficiency.
+
+---
+
+##  Gradient Descent
+
+Gradient Descent is an optimization algorithm that updates model weights by minimizing the loss function:
+
+\[
+\theta = \theta - \eta \cdot \nabla J(\theta)
+\]
+
+- \( \theta \): model parameters  
+- \( \eta \): learning rate  
+- \( \nabla J(\theta) \): gradient of the cost function
+
+---
+
+##   Stochastic Gradient Descent
+
+Instead of computing the gradient over the entire dataset (as in **Batch Gradient Descent**), SGD computes the gradient using **just one sample (or a mini-batch)** at a time, resulting in:
+
+- Faster updates
+- Noisy gradients (which helps escape local minima)
+- Often better generalization
+
+---
+
+##  Using SGD in Scikit-learn
+
+Scikit-learn provides `SGDClassifier` and `SGDRegressor` for linear models trained with SGD.
+
+```python
+from sklearn.linear_model import SGDClassifier, SGDRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_classification, make_regression
+```
+
+# SGD for Classification
+```python
+# Generate classification data
+X, y = make_classification(n_samples=1000, n_features=10, random_state=42)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Create and train the classifier
+clf = SGDClassifier(loss='hinge', max_iter=1000, tol=1e-3)
+clf.fit(X_train, y_train)
+
+# Evaluate
+from sklearn.metrics import accuracy_score
+preds = clf.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, preds))
+
+```
+
+
+# SGD for Regression
+```python
+# Generate regression data
+X, y = make_regression(n_samples=1000, n_features=10, noise=0.1, random_state=42)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Create and train the regressor
+reg = SGDRegressor(loss='squared_error', max_iter=1000, tol=1e-3)
+reg.fit(X_train, y_train)
+
+# Evaluate
+from sklearn.metrics import mean_squared_error
+preds = reg.predict(X_test)
+print("MSE:", mean_squared_error(y_test, preds))
+```
+
+
+# Learning Rate Strategies
+
+
+```python
+SGDClassifier(learning_rate='constant', eta0=0.01)
+SGDClassifier(learning_rate='adaptive', eta0=0.01)
+```
+
+
+
+# Feature Scaling (Important!)
+
+```python
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+pipeline = make_pipeline(StandardScaler(), SGDClassifier())
+pipeline.fit(X_train, y_train)
+```
+
+
+#  Nearest Neighbors in Python Machine Learning
+
+The **Nearest Neighbors** algorithm is a **non-parametric**, **lazy learning** method used for **classification**, **regression**, and **unsupervised learning**. It works by finding the most similar instances (neighbors) to a new data point and using them for prediction.
+
+---
+
+##  K-Nearest Neighbors (KNN)
+
+**K-Nearest Neighbors (KNN)** is a simple algorithm that:
+- Stores all available data
+- Predicts the output by measuring distance to the `k` nearest data points
+
+For classification, it uses **majority voting**.
+For regression, it returns the **mean or median** of neighbors' values.
+
+---
+
+##  Key Concepts
+
+- **Lazy learner**: No training phase (just memory of dataset)
+- **Distance-based**: Common distances:
+  - Euclidean (default)
+  - Manhattan
+  - Minkowski
+- **k-value**: Number of neighbors to consider (commonly odd, like 3 or 5)
+
+---
+
+##  KNN with Scikit-learn
+
+###  Import Required Libraries
+
+```python
+from sklearn.datasets import load_iris, make_regression
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.metrics import accuracy_score, mean_squared_error
+```
+
+# KNN for Classification
+```python
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create model
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = knn.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+```
+
+# KNN for Regression
+```python
+# Generate synthetic regression data
+X, y = make_regression(n_samples=500, n_features=3, noise=5.0, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```
+# Create model
+```python
+knn_reg = KNeighborsRegressor(n_neighbors=3)
+knn_reg.fit(X_train, y_train)
+```
+# Predict and evaluate
+```python
+y_pred = knn_reg.predict(X_test)
+print("MSE:", mean_squared_error(y_test, y_pred))
+```
+
+
+
+## Distance Metrics
+
+```python
+KNeighborsClassifier(metric='manhattan')  # L1
+KNeighborsClassifier(metric='euclidean')  # L2 (default)
+KNeighborsClassifier(metric='minkowski', p=3)
+```
+
+
+## Scaling Features
+
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+pipeline = make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=5))
+pipeline.fit(X_train, y_train)
+
+```
+
 
