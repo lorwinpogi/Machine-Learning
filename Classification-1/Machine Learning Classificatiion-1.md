@@ -691,6 +691,267 @@ from sklearn.preprocessing import StandardScaler
 
 pipeline = make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=5))
 pipeline.fit(X_train, y_train)
+```
+
+
+# Gaussian Processes in Python Machine Learning
+
+Gaussian Processes (GPs) are a non-parametric, Bayesian approach to regression and probabilistic modeling. They are particularly useful when:
+
+- You have a small-to-medium-sized dataset
+- You want a prediction **with uncertainty**
+- The underlying function is complex and potentially non-linear
+
+
+A **Gaussian Process** is a collection of random variables, any finite number of which have a joint **Gaussian distribution**. You can think of it as a distribution **over functions**.
+
+### Formal Definition
+
+A GP is fully specified by:
+
+- A **mean function**:  
+  \[
+  m(x) = \mathbb{E}[f(x)]
+  \]
+
+- A **covariance function** (kernel):  
+  \[
+  k(x, x') = \mathbb{E}[(f(x) - m(x))(f(x') - m(x'))]
+  \]
+
+The GP is written as:
+
+\[
+f(x) \sim \mathcal{GP}(m(x), k(x, x'))
+\]
+
+---
+
+##  Gaussian Process Regression (GPR) in Python
+
+Use `scikit-learn` for Gaussian Process Regression.
+
+###  Installation
+
+```bash
+pip install scikit-learn matplotlib numpy
+```
+
+
+## Sample Code:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, WhiteKernel
+
+# Training data
+X = np.atleast_2d(np.linspace(0, 10, 10)).T
+y = np.sin(X).ravel() + np.random.normal(0, 0.1, X.shape[0])  # Add some noise
+
+# Define kernel (RBF + noise term)
+kernel = RBF(length_scale=1.0) + WhiteKernel(noise_level=0.1)
+
+# Initialize Gaussian Process Regressor
+gp = GaussianProcessRegressor(kernel=kernel)
+
+gp.fit(X, y)
+
+# Predict at new points
+X_pred = np.atleast_2d(np.linspace(0, 10, 100)).T
+y_pred, sigma = gp.predict(X_pred, return_std=True)
+
+plt.figure(figsize=(10, 6))
+plt.plot(X, y, 'r.', markersize=10, label='Observations')
+plt.plot(X_pred, y_pred, 'b-', label='Prediction')
+plt.fill_between(X_pred.ravel(), y_pred - 1.96 * sigma, y_pred + 1.96 * sigma,
+                 alpha=0.2, label='95% Confidence Interval')
+plt.title("Gaussian Process Regression")
+plt.xlabel("X")
+plt.ylabel("y")
+plt.legend()
+plt.show()
+```
+
+
+
+
+#  Decision Trees 
+
+A **Decision Tree** is a supervised learning algorithm used for both **classification** and **regression** tasks. It models decisions and their possible consequences as a tree-like structure of branches.
+
+
+A Decision Tree is a flowchart-like structure where:
+
+- **Internal nodes** represent tests on features (e.g., "Is feature > 5?")
+- **Leaves** represent predicted labels or values
+- **Branches** represent decision rules
+
+### Example:
+
+Is Age < 30?
+├── Yes: Recommend Product A
+└── No: Recommend Product B
+
+---
+
+##  Advantages of Decision Trees
+
+- Easy to understand and interpret
+- Requires little data preprocessing
+- Can handle both numerical and categorical data
+- Performs well with large datasets
+
+---
+
+##  Disadvantages
+
+- Prone to **overfitting**
+- Unstable: small changes in data can result in different trees
+- Biased towards features with more levels
+
+---
+
+## Decision Trees in Python (with `scikit-learn`)
+
+### 1.  Imports
+
+```python
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+clf = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=42)
+clf.fit(X_train, y_train)
+
+plt.figure(figsize=(12, 8))
+plot_tree(clf, filled=True, feature_names=iris.feature_names, class_names=iris.target_names)
+plt.show()
+
+plt.figure(figsize=(12, 8))
+plot_tree(clf, filled=True, feature_names=iris.feature_names, class_names=iris.target_names)
+plt.show()
+
+from sklearn.metrics import accuracy_score, classification_report
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+```
+
+
+# Ensemble Methods: Voting Classifier in Python
+
+**Ensemble learning** combines predictions from multiple models to improve accuracy, robustness, and generalisation.
+
+One of the simplest ensemble techniques is the **Voting Classifier**, which aggregates predictions from several base models and selects the most common one (for classification tasks).
+
+
+A **Voting Classifier** combines multiple classification models (e.g., Logistic Regression, Decision Tree, SVM) and makes a final prediction based on **majority vote**.
+
+There are two types:
+
+### 1. **Hard Voting** (majority voting)
+
+- Predicts the class that gets the **most votes** from the classifiers.
+
+### 2. **Soft Voting** (average probabilities)
+
+- Averages the **predicted probabilities** and chooses the class with the highest average probability.
+- Requires classifiers with `predict_proba()` implemented.
+- You want a **simple ensemble** method
+- You have several **strong but different models**
+- You aim to **reduce variance** or **improve generalization**
+
+---
+
+## ⚙️ Implementation in Python (`scikit-learn`)
+
+### 1.  Imports
+
+```python
+from sklearn.ensemble import VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+iris = load_iris()
+X, y = iris.data, iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+log_clf = LogisticRegression(max_iter=200)
+tree_clf = DecisionTreeClassifier(max_depth=4)
+svm_clf = SVC(probability=True)  # Required for soft voting
+
+voting_clf = VotingClassifier(
+    estimators=[('lr', log_clf), ('dt', tree_clf), ('svm', svm_clf)],
+    voting='hard'
+)
+
+voting_clf = VotingClassifier(
+    estimators=[('lr', log_clf), ('dt', tree_clf), ('svm', svm_clf)],
+    voting='soft'
+)
+
+voting_clf.fit(X_train, y_train)
+
+y_pred = voting_clf.predict(X_test)
+print("Voting Classifier Accuracy:", accuracy_score(y_test, y_pred))
+
+for clf in (log_clf, tree_clf, svm_clf, voting_clf):
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    print(f"{clf.__class__.__name__} Accuracy: {accuracy_score(y_test, y_pred):.2f}")
+
+```
+
+
+#  Multiclass and Multioutput Algorithms in Python
+
+In machine learning, **classification problems** aren't always simple binary tasks. Often, we deal with:
+
+- **Multiclass classification**: One label, multiple possible classes
+- **Multilabel classification**: Multiple labels per instance
+- **Multiclass-multioutput classification**: Multiple classification tasks, each with multiple possible classes
+
+---
+
+## 1. Multiclass Classification
+
+**Multiclass classification** refers to a problem where each sample is assigned exactly **one label from more than two classes**.
+
+### Example:
+Classifying digits (0–9) using MNIST.
+
+###  In `scikit-learn`
+Most classifiers (e.g., `LogisticRegression`, `SVC`, `RandomForestClassifier`) support multiclass out-of-the-box using **One-vs-Rest (OvR)** or **One-vs-One (OvO)** schemes.
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+clf = LogisticRegression(max_iter=200)
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+```
+
 
 ```
 
