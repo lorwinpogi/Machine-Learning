@@ -82,7 +82,7 @@ for _ in range(1000):
 p.disconnect()
 
 ```
-3. ### **Unity ML-Agents**
+### 3.  **Unity ML-Agents**
 Unity’s toolkit for training intelligent agents in realistic 3D environments.
 
 Requires Unity installation and Python package:
@@ -289,7 +289,7 @@ Here’s a basic sequence of how an environment behaves:
 ### **Python Libraries for Simulation Environments**
 
 
-1. ## **OpenAI Gym**
+### 1.  **OpenAI Gym**
 
 ```bash
 pip install gym
@@ -310,7 +310,7 @@ for _ in range(1000):
 env.close()
 ```
 
-2. ## **Custom Environments with gym.Env**
+### 2.  **Custom Environments with gym.Env**
 You can create your own environment by subclassing gym.Env and defining the following methods:
 
 __init__(self)
