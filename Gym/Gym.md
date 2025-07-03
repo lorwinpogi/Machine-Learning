@@ -371,7 +371,7 @@ while not done:
 ```
 
 
-### # Types of Environments
+###  Types of Environments
 
 - **Deterministic**  
   Same action in the same state always gives the same result.
