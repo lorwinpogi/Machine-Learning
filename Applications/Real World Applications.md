@@ -1,6 +1,6 @@
 # Real World Applications
 
-# Credit Card Fraud Detection using Machine Learning
+## Credit Card Fraud Detection using Machine Learning
 
 ## Introduction
 
@@ -139,7 +139,7 @@ Performance should be evaluated using precision, recall, and F1-score, especiall
 
 
 
-# Wealth Management in Machine Learning
+## Wealth Management in Machine Learning
 
 ## Introduction
 
@@ -254,7 +254,7 @@ Scalable personalization for financial advisors and firms
 
 Models such as classification (for client profiles), regression (for return prediction), clustering (for segmentation), and NLP (for unstructured text analysis) are commonly used. These models enhance traditional wealth management processes by making them more accurate, efficient, and scalable.
 
-# Predicting Student Behavior In Machine Learning
+## Predicting Student Behavior In Machine Learning
 
 ## Introduction
 
