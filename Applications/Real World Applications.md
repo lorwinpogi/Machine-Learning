@@ -956,6 +956,7 @@ print("Predicted Readmission Risk (1 = Yes, 0 = No):", prediction)
 
 
 ## Summary
+
 Machine learning provides a data-driven approach to reduce avoidable readmissions by:
 
 Identifying high-risk patients
@@ -1095,7 +1096,6 @@ Forest management involves planning and implementing practices for the conservat
 ### 5. Habitat and Biodiversity Mapping
 - Analyze spatial and ecological data to track animal populations and species diversity.
 
----
 
 ## Sample Use Case: Predicting Forest Fire Risk
 
