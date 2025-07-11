@@ -1057,6 +1057,16 @@ print("Accuracy Score:", accuracy_score(y_test, y_pred))
 
 ```python
 
+new_patient = pd.DataFrame([{
+    'age': 48,
+    'bmi': 29.0,
+    'blood_pressure': 135,
+    'glucose_level': 150
+}])
+
+prediction = model.predict(new_patient)[0]
+print("Predicted Diabetes Status (1 = Yes, 0 = No):", prediction)
+```
 ## Summary
 Machine learning improves disease management by:
 
@@ -1069,8 +1079,6 @@ Automating continuous monitoring and alerting
 Enhancing personalization of care plans
 
 Popular models include logistic regression, decision trees, random forests, support vector machines, and neural networks. Effective use of ML requires clean, well-labeled healthcare data, along with clinical validation.
-```
-
 
 ## Forest Management Using Machine Learning
 
