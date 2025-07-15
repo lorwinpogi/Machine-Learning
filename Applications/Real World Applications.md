@@ -1298,9 +1298,7 @@ CNNs or RNNs when working with video or time-series data
 
 Anomaly detection models for health alerts or abnormal behavior
 
-This workflow can be extended to include cloud monitoring systems, edge computing for IoT devices, or more complex neural networks for larger datasets
-
-.
+This workflow can be extended to include cloud monitoring systems, edge computing for IoT devices, or more complex neural networks for larger datasets.
 
 ## Energy Management Using Machine Learning
 
