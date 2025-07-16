@@ -469,7 +469,7 @@ plt.show()
 
 
 
-### ## Interpreting Feature Importance Results
+### Interpreting Feature Importance Results
 
 | Observation                                          | Possible Implication                                                                 |
 |------------------------------------------------------|----------------------------------------------------------------------------------------|
