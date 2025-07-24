@@ -1707,7 +1707,6 @@ RAI Dashboard (Azure)
 
 
 
-
 This is especially critical in high-stakes applications such as hiring, lending, healthcare, or criminal justice, where unequal model behavior can reinforce systemic discrimination.
 
 
@@ -1731,7 +1730,7 @@ Imbalanced datasets often reflect societal or historical inequities. For example
 | Proxy discrimination | Features highly correlated with protected attributes bias the outcome     |
 
 #### Example: Evaluating Fairness by Group
-
+```python
 from sklearn.datasets import make_classification
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
